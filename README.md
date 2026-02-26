@@ -1,58 +1,55 @@
 # Analog Communication System Simulation (AM, FM, PM)
 
-A comprehensive Python-based end-to-end simulation of analog communication chains. This project covers the entire process of signal generation, modulation, noise analysis, and high-precision digital demodulation.
+This project provides a complete end-to-end simulation of an analog communication chain, including signal generation, noise modeling, multiple modulation schemes, and digital recovery using Hilbert Transform.
 
-## 🚀 Overview
-This repository contains a full simulation of:
-* [cite_start]**Signal Analysis:** Defining complex multi-tone message signals and calculating power/energy.
-* [cite_start]**Modulation Schemes:** Implementation of Amplitude Modulation (DSB-FC), Frequency Modulation (FM), and Phase Modulation (PM).
-* [cite_start]**Noise Modeling:** Evaluation of system performance under Additive White Gaussian Noise (AWGN) with various SNR levels.
-* [cite_start]**Advanced Demodulation:** Signal recovery using Hilbert Transform for instantaneous phase and amplitude extraction.
+## 🚀 Simulation Workflow
 
----
+The project is structured into 7 core parts, following a professional communication engineering pipeline:
 
-## 📊 Key Results
+### PART 1: Message Signal Generation
+A multi-tone signal $x(t) = \sin(2\pi \cdot 5t) + 0.5 \cos(2\pi \cdot 12t)$ is defined as the information source. The system calculates the initial energy and power in both time and frequency domains.
 
-### 1. Message Signal Analysis
-[cite_start]The baseband signal is a multi-tone signal consisting of two frequencies (5 Hz and 12 Hz).
-![Message Signal](./message%20signal.png)
+### PART 2: AWGN Noise Modeling
+To simulate a real-world channel, **Additive White Gaussian Noise (AWGN)** is added to the message.
+* **Target SNR:** 20 dB.
+* The script calculates the actual SNR after adding noise to verify channel conditions.
 
-### 2. FM Modulation (Frequency Domain)
-In FM, the frequency of the carrier changes according to the message amplitude. [cite_start]This creates a wideband spectrum with multiple sidebands.
-![FM Spectrum](./FM.png)
+### PART 3: Carrier Configuration
+A high-frequency carrier signal is generated with:
+* **Amplitude ($A_c$):** 100
+* **Frequency ($f_c$):** 250 Hz
 
-### 3. Signal Recovery (Demodulation)
-[cite_start]Using the **Hilbert Transform**, we successfully recovered the original message from the modulated carriers, even in the presence of noise.
-![Demodulation](./Demodulation.png)
+### PART 4: Modulation Schemes
+Implementation of three major analog modulations:
+1. **AM (DSB-FC):** Using a modulation index ($\mu$) of 0.5.
+2. **FM:** Frequency deviation set to $f_{\Delta} = 50$ Hz/V.
+3. **PM:** Phase deviation set to $\phi_{\Delta} = \pi/2$ rad/V.
 
----
+### PART 5: Advanced Digital Demodulation
+Signal recovery is performed using the **Analytic Signal (Hilbert Transform)**:
+* **AM Recovery:** Envelope detection via `abs(hilbert(x))`.
+* **FM Recovery:** Instantaneous frequency estimation by taking the derivative of the unwrapped phase.
+* **PM Recovery:** Instantaneous phase extraction and carrier phase subtraction.
 
-## 🛠 Technical Implementation
-### Modulation Parameters (Based on Python Code)
-* **Sampling Frequency ($f_s$):** 10,000 Hz.
-* **Carrier Frequency ($f_c$):** 250 Hz.
-* **Carrier Amplitude ($A_c$):** 100.
-* **FM Sensitivity ($f_{\Delta}$):** 50 Hz/V.
-* **PM Sensitivity ($\phi_{\Delta}$):** $\pi/2$ rad/V.
-* **AM Modulation Index ($\mu$):** 0.5.
+### PART 6: Comparison & Visualization
+The original signal is plotted against the recovered signals for AM, FM, and PM to visually assess the fidelity of each modulation scheme.
 
-### Demodulation Logic
-* **AM:** Extracted via the magnitude of the analytic signal (Envelope Detection): `abs(hilbert(x))`.
-* **PM:** Recovered by extracting the instantaneous phase and subtracting the carrier phase: `unwrap(angle(hilbert(x))) - (2*pi*fc*t)`.
-* **FM:** Calculated by taking the time derivative of the unwrapped instantaneous phase to find frequency deviations.
+### PART 7: Performance Metrics (Error Analysis)
+The system evaluates the quality of reconstruction using:
+* **Mean Squared Error (MSE):** Quantifies the difference between original and recovered signals.
+* **Correlation Coefficient:** Measures the linear relationship and similarity between waveforms.
 
 ---
 
-## 📁 Repository Structure
-* [cite_start]`telecommunication_simulation.py`: The main Python script containing all algorithms.
-* `images/`: Contains all generated plots for time and frequency domains.
-* `Report.pdf`: Detailed theoretical and practical analysis of the project.
+## 📊 Visual Results
+The repository includes visual representations of:
+* Time-domain waveforms for all modulated signals.
+* Frequency spectra (FFT) showing the distribution of power and sidebands.
+* Comparison plots of Original vs. Recovered signals.
 
-## 💻 Requirements
-* Python 3.x
-* NumPy
-* SciPy
-* Matplotlib
+## 🛠 Tech Stack
+* **Language:** Python 3.12
+* **Libraries:** NumPy, SciPy (Signal Processing), Matplotlib (Visualization)
 
 ---
-*Developed as part of the Analog Communications course project.*
+*This project was developed for the Analog Communication Systems course.*
