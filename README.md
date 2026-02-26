@@ -2,7 +2,7 @@
 
 This project provides a complete end-to-end simulation of an analog communication chain, including signal generation, noise modeling, multiple modulation schemes, and digital recovery using Hilbert Transform.
 
-## 🚀 Simulation Workflow
+##  Simulation Workflow
 
 The project is structured into 7 core parts, following a professional communication engineering pipeline:
 
@@ -47,7 +47,7 @@ The repository includes visual representations of:
 * Frequency spectra (FFT) showing the distribution of power and sidebands.
 * Comparison plots of Original vs. Recovered signals.
 
-## 🛠 Tech Stack
+##  Tech Stack
 * **Language:** Python 3.12
 * **Libraries:** NumPy, SciPy (Signal Processing), Matplotlib (Visualization)
 
